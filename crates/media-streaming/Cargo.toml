@@ -1,0 +1,18 @@
+[package]
+name = "media-streaming"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[features]
+default = []
+gstreamer = ["dep:gstreamer", "dep:gstreamer-sdp", "dep:gstreamer-webrtc"]
+
+[dependencies]
+gstreamer = { workspace = true, optional = true }
+gstreamer-sdp = { workspace = true, optional = true }
+gstreamer-webrtc = { workspace = true, optional = true, features = ["v1_18"] }
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tokio.workspace = true

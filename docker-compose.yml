@@ -1,0 +1,40 @@
+services:
+  relay:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DISPLAY: :99
+      BROWSER_RELAY_BIND: 0.0.0.0:8080
+      BROWSER_RELAY_CHROMIUM: /usr/bin/chromium
+      BROWSER_RELAY_PROXY: ${BROWSER_RELAY_PROXY:-socks5://192.168.13.128:4712}
+      BROWSER_RELAY_VIDEO_WIDTH: 1280
+      BROWSER_RELAY_VIDEO_HEIGHT: 720
+      BROWSER_RELAY_VIDEO_FPS: 30
+      BROWSER_RELAY_VIDEO_BITRATE_KBPS: 2500
+      GST_DEBUG: "2"
+      GST_DEBUG_NO_COLOR: "1"
+    ports:
+      - "127.0.0.1:${BROWSER_RELAY_PORT:-8099}:8080"
+    depends_on:
+      fixture:
+        condition: service_started
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 256
+
+  fixture:
+    image: nginx:1.27-alpine
+    volumes:
+      - ./docker/fixture:/usr/share/nginx/html:ro
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:3000:80"
+    depends_on:
+      - relay

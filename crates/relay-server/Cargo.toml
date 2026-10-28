@@ -1,0 +1,24 @@
+[package]
+name = "relay-server"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[features]
+default = []
+gstreamer = ["media-streaming/gstreamer"]
+
+[dependencies]
+axum.workspace = true
+browser-runtime = { path = "../browser-runtime" }
+futures-util.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+browser-control = { path = "../browser-control" }
+relay-protocol = { path = "../relay-protocol" }
+session-manager = { path = "../session-manager" }
+media-streaming = { path = "../media-streaming" }
+
+[dev-dependencies]
+tower = { version = "0.5", features = ["util"] }

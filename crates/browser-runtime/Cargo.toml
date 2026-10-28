@@ -1,0 +1,13 @@
+[package]
+name = "browser-runtime"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+browser-control = { path = "../browser-control" }
+libc.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+tokio.workspace = true
+url.workspace = true
